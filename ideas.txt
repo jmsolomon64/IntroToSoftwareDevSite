@@ -1,0 +1,19 @@
+Ideas
+-----------
+Interactive website
+    Canvas background 
+        maybe responds to cursor position?
+        background ideas:
+            fireflies
+            rain
+            stars
+    Canvas simulation
+        research how to use canvas to simulate gravity and stuff like that 
+        html form to allow user to adjust different variables in simulation
+    Simple card game with HTML/CSS
+        black jack
+        solitaire? 
+        could render card symbols using svg icons or sm 
+
+I already do boring website work I want to learn something fun
+        
