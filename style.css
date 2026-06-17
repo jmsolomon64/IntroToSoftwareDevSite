@@ -1,3 +1,49 @@
+:root {
+    --background-color: white;
+    --nav-background-color: grey;
+    --nav-link-color: black;
+    --nav-link-boder-color: black;
+    --nav-link-hover-background-color: white;
+    --nav-link-hover-text-color: red;
+}
+
 body {
-    background-color: green;
+    background-color: var(--background-color);
+    margin: 0px;
+}
+
+/* Navigation Styles */
+nav {
+    margin: 0px;
+    background-color: var(--nav-background-color);
+}
+
+nav > ul {
+    list-style-type: none;
+    display: flex;
+    margin: 0px;
+    padding: 0px;
+}
+
+nav li {
+    border: 1px solid var(--nav-link-boder-color); 
+    margin: 0px;
+    text-decoration: none;
+    color: var(--nav-link-color);
+}
+
+nav li:hover {
+    background-color: var(--nav-link-hover-background-color);
+    color: var(--nav-link-hover-text-color)
+}
+
+nav a {
+    padding: 5px 10px;
+    text-decoration: inherit;
+    color: inherit;
+}
+
+nav a.active {
+    background-color: var(--nav-link-hover-background-color);
+    color: var(--nav-link-hover-text-color)
 }
