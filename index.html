@@ -4,20 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="./style.css" rel="stylesheet"></link>
-    <title>Interactive Website</title>
+    <title>Interactive Website - Index</title>
 </head>
 <body>
     <!-- Content -->
     <h1>TODO: put something interesting on this page</h1>
-    <script type="module">
-        import { loadStyles } from "./style.js";
-        import * as site from "./site.js";
-
-        console.log('Testing testing');
-
-        loadStyles();
-        site.renderHeader(site.homeId);
-    </script>
-    <!-- <script type="module" src="./index.js "></script> -->
+    <button id="testButton">JSON Test</button>
+    <script type="module" src="./index.js"></script>
+    <input id="testInput" type="file" accept=".json"></input>
 </body>
 </html>
