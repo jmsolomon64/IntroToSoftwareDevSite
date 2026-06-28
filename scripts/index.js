@@ -14,11 +14,24 @@ document.addEventListener("DOMContentLoaded", function() {
 
 function testButtonSetup() {
     const button = document.getElementById('testButton');
-    const testJson = {
-        string: 'yes',
-        int: 1,
-        float: 1.1
-    };
+    const testJson = [
+        {
+            string: 'yes',
+            int: 1,
+            float: 1.1
+        },
+        {
+            string: 'no',
+            int: 2,
+            float: 2.1
+        },
+        {
+            string: 'maybe',
+            int: 3,
+            float: 4.2,
+            extra: 'this is a test'
+        }
+    ];
     button.onclick = (() => io.createJSONFile(testJson, 'test.json'));
 }
 

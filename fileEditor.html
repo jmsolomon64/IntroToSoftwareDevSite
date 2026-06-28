@@ -9,6 +9,9 @@
 <body>
     <!-- Content -->
     <h1>TODO: put something interesting on this page</h1>
+    <button id="testButton">JSON Test</button>
+    <input id="testInput" type="file" accept=".json"></input>
+    <div id="placeholder"></div>
     <table id="test">
         <thead>
             <tr>
@@ -39,27 +42,6 @@
             </tr>
         </tbody>
     </table>
-
-    <script type="module">
-        import { loadStyles } from "./scripts/style.js";
-        import * as site from "./scripts/site.js";
-        import { Grid } from './scripts/grid.js';
-
-        //Handle initialization of page
-        document.addEventListener('DOMContentLoaded', (event) => {
-            loadStyles();
-            site.renderHeader(site.fileEditorId);
-            const grid = new Grid('test');
-            console.log('grid.Id: ', grid.Id);
-            console.log('grid.Columns', grid.Columns);
-            console.log('grid.Rows', grid.Rows);
-            console.log('grid.Table', grid.Table);
-            console.log('grid.RowData', grid.RowData);
-            grid.AddNewRow();
-            grid.AddNewColumn();
-            grid.AddNewRow();
-            grid.AddNewColumn();
-        });
-    </script>
+    <script type="module" src="./scripts/fileEditor.js"></script>
 </body>
 </html>
