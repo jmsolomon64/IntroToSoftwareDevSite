@@ -26,7 +26,7 @@ nav > ul {
 }
 
 nav li {
-    border: 1px solid var(--nav-link-boder-color); 
+    border: .1rem solid var(--nav-link-boder-color); 
     margin: 0px;
     text-decoration: none;
     color: var(--nav-link-color);
@@ -38,7 +38,7 @@ nav li:hover {
 }
 
 nav a {
-    padding: 5px 10px;
+    padding: 1rem 2rem;
     text-decoration: inherit;
     color: inherit;
 }
@@ -46,4 +46,9 @@ nav a {
 nav a.active {
     background-color: var(--nav-link-hover-background-color);
     color: var(--nav-link-hover-text-color)
+}
+
+/* Table Styling */
+td {
+    border: .1rem solid var(--nav-link-boder-color); 
 }

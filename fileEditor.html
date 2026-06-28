@@ -9,14 +9,57 @@
 <body>
     <!-- Content -->
     <h1>TODO: put something interesting on this page</h1>
+    <table id="test">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Level</th>
+                <th>Health</th>
+                <th>Magic</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Juno</td>
+                <td>7</td>
+                <td>88</td>
+                <td>100</td>
+            </tr>
+            <tr>
+                <td>Poseidon</td>
+                <td>8</td>
+                <td>90</td>
+                <td>75</td>
+            </tr>
+            <tr>
+                <td>Aslan</td>
+                <td>5</td>
+                <td>100</td>
+                <td>45</td>
+            </tr>
+        </tbody>
+    </table>
+
     <script type="module">
-        import { loadStyles } from "./style.js";
-        import * as site from "./site.js";
+        import { loadStyles } from "./scripts/style.js";
+        import * as site from "./scripts/site.js";
+        import { Grid } from './scripts/grid.js';
 
-        console.log('Testing testing');
-
-        loadStyles();
-        site.renderHeader(site.fileEditorId);
+        //Handle initialization of page
+        document.addEventListener('DOMContentLoaded', (event) => {
+            loadStyles();
+            site.renderHeader(site.fileEditorId);
+            const grid = new Grid('test');
+            console.log('grid.Id: ', grid.Id);
+            console.log('grid.Columns', grid.Columns);
+            console.log('grid.Rows', grid.Rows);
+            console.log('grid.Table', grid.Table);
+            console.log('grid.RowData', grid.RowData);
+            grid.AddNewRow();
+            grid.AddNewColumn();
+            grid.AddNewRow();
+            grid.AddNewColumn();
+        });
     </script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-const headerFile = './header.html';
+const headerFile = './partials/header.html';
 const homeId = 'homeLink';
 const fileEditorId = 'fileEditorLink';
 const textureId = 'textureCreatorLink';
