@@ -7,11 +7,12 @@ import { Grid } from './grid.js';
 loadStyles();
 site.renderHeader(site.fileEditorId);
 
+const test = new Grid('test');
+
 // This will fire once whenever the DOM has loaded
 document.addEventListener("DOMContentLoaded", function() {
     testButtonSetup();
     testInputSetup();
-    
 });
 
 function testButtonSetup() {
@@ -21,7 +22,7 @@ function testButtonSetup() {
         int: 1,
         float: 1.1
     };
-    button.onclick = (() => io.createJSONFile(testJson, 'test.json'));
+    button.onclick = (() => io.createJSONFile(test.RowData, 'test.json'));
 }
 
 function testInputSetup() {
