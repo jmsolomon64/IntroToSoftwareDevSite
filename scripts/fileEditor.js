@@ -1,18 +1,19 @@
 import { loadStyles } from "./style.js";
 import * as io from './io.js';
 import * as site from "./site.js";
-import { Grid } from './grid.js';
+import { Grid, GridControls } from './grid.js';
 
 
 loadStyles();
 site.renderHeader(site.fileEditorId);
 
-const test = new Grid('test');
+// const test = new Grid('test');
 
 // This will fire once whenever the DOM has loaded
 document.addEventListener("DOMContentLoaded", function() {
-    testButtonSetup();
-    testInputSetup();
+    // testButtonSetup();
+    // testInputSetup();
+    testGridControls()
 });
 
 function testButtonSetup() {
@@ -23,6 +24,17 @@ function testButtonSetup() {
         float: 1.1
     };
     button.onclick = (() => io.createJSONFile(test.RowData, 'test.json'));
+}
+
+function testGridControls() {
+    const test = [ 'testControl1', 'testControl2', 'testControl3' ];
+    let testGrids = []
+    const holder = document.getElementById('gridHolder');
+    for(const i of test) {
+        let grid = new GridControls(i);
+        holder.append(grid.CreatePanel());
+        testGrids.push(grid);
+    }
 }
 
 function testInputSetup() {

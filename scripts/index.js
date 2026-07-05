@@ -40,5 +40,5 @@ function testInputSetup() {
     input.addEventListener('change', function() {
         console.log('this: ', this);
         io.readJSONFile(this).then((data) => console.log(data));
-    })
+    });
 }

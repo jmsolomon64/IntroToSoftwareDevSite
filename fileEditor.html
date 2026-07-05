@@ -8,11 +8,28 @@
 </head>
 <body>
     <!-- Content -->
-    <h1>TODO: put something interesting on this page</h1>
-    <button id="testButton">JSON Test</button>
+    <h1 class="title">File Editor</h1>
+    <section id="gridHolder">
+        <details class="fileEditorPanel">
+            <summary>Test</summary>
+            <div>example</div>
+        </details>
+        <details class="fileEditorPanel">
+            <summary>Test</summary>
+            <div>example</div>
+        </details>
+        <details class="fileEditorPanel">
+            <summary class="panelTitle"><input type="text" placeholder="Name of File"></summary>
+            <div>
+                <button>Create New</button>
+                <input type="file"/>
+            </div>
+        </details>
+    </section>
+    <!-- <button id="testButton">JSON Test</button>
     <input id="testInput" type="file" accept=".json"></input>
-    <div id="placeholder"></div>
-    <table id="test">
+    <div id="placeholder"></div> -->
+    <!-- <table id="test">
         <thead>
             <tr>
                 <th>Name</th>
@@ -41,7 +58,7 @@
                 <td>45</td>
             </tr>
         </tbody>
-    </table>
+    </table> -->
     <script type="module" src="./scripts/fileEditor.js"></script>
 </body>
 </html>

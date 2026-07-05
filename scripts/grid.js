@@ -1,3 +1,5 @@
+import * as io from './io.js';
+
 /** Allows for creation and control of a dynamic table in HTML */
 class Grid {
     // =============== Getters ===============
@@ -20,9 +22,13 @@ class Grid {
     /** Appends a new table to whatever element has id == this.PlaceHolderId */
     AddNewTable() { return this.UI.CreateTable(this.IO.ColumnNames, this.IO.RowData); }
     /** Appends a new column to an existing table */
-    AddNewColumn() { this.UI.CreateNewColumn(this.Rows); }
+    AddNewColumn() { this.UI.CreateNewColumn(this.Rows, this.Header.firstChild); }
     /** Appends a new row to an existing table */
     AddNewRow() { this.Body.appendChild(this.UI.CreateNewRow(this.Columns)); }
+
+    DeleteRow() { this.UI.DeleteRow(this.Table); }
+
+    DeleteColumn() {this.UI.DeleteColumn(this.Table); }
 
     // =============== Constructor ===============
     /** Create instance of Grid class
@@ -46,9 +52,141 @@ class Grid {
     } 
 }
 
-class GridBuilder {
-    get CellInputId() { return `${this.TableId}_input`};
+class GridControls {
+    //Holds instance of grid
+    //--Config state
+    //Holds buttons for importing/creating new
+    //  logic for handling input usage
+    //  after one of these two options are used, we change state from config state
 
+    //--Main state 
+    //Holds table, buttons for adding new rows/columns
+    //Also buttons for removing rows/columns
+    //Input for the name of the file at the top of the panel
+    //Button and logic for exporting file 
+
+
+    // =============== UI Builder ===============
+    CreatePanel() {
+        const summary = this.#CreateSummary();
+        summary.append(this.TitleNode);
+        
+        const inputs = this.#CreateInputHolder();
+        inputs.append(this.#CreateNewButton());
+        inputs.append(this.#CreateFileUpload());
+        
+        this.PanelNode.append(summary);
+        this.PanelNode.append(inputs);
+        return this.PanelNode;
+    }
+    
+    // =============== Private UI Methods ===============
+    #CreatePanel() {
+        const panel = document.createElement('details');
+        panel.classList.add(this.#PanelClass);
+        panel.id = this.Id;
+        return panel;
+    }
+
+    #CreateSummary() {
+        const summary = document.createElement('summary');
+        summary.classList.add(this.#PanelSummaryClass);
+        return summary;
+    }
+
+    #CreateTitle() {
+        const title = document.createElement('input');
+        title.type = 'text';
+        title.id = `${this.Id}title`;
+        return title;
+    }
+
+    #CreateInputHolder() { 
+        const holder = document.createElement('div');
+        holder.id = this.InputHolderId;
+        return holder;
+    }
+
+    #CreateNewButton() { 
+        const btn = document.createElement('button');
+        btn.id = this.CreateBtnId;
+        btn.textContent = 'Create New';
+        return btn;
+    }
+
+    #CreateFileUpload() {
+        const input = document.createElement('input')
+        input.id = this.FileUploadId;
+        input.type = 'file';
+        input.accept = '.json';
+        input.addEventListener('change', (e) => this.#FileUploadChange(e.target));
+        return input;
+    }
+
+    #CreateExportButton() {
+        const btn = document.createElement('button');
+        btn.id = this.ExportBtnId;
+        btn.textContent = 'Export File';
+        btn.addEventListener('click', (e) => this.#FileExport(e.target));
+        return btn;
+    }
+
+    #CreateButton(text, event) {
+        const button = document.createElement('button');
+        button.classList.add('gridButton');
+        button.textContent = text;
+        button.addEventListener('click', (e) => event(e.target));
+        return button;
+    }
+
+    #CreateGridModifyButtonHolder() {
+        const holder = document.createElement('div');
+        holder.append(this.#CreateButton('Add Row', () => this.Grid.AddNewRow()));
+        holder.append(this.#CreateButton('Remove Row', () => this.Grid.DeleteRow()));
+        holder.append(this.#CreateButton('Add Column', () => this.Grid.AddNewColumn()));
+        holder.append(this.#CreateButton('Remove Column', () => this.Grid.DeleteColumn()));
+        return holder;
+    }
+
+    #CreateGrid(data) {
+        this.Grid = new Grid(this.GridId, this.Id, data);
+        const holder = document.getElementById(this.InputHolderId);
+        holder.innerHTML = ''
+        holder.append(this.#CreateGridModifyButtonHolder());
+        this.Grid.AddNewTable().then((table) => {
+            holder.append(table);
+            holder.append(this.#CreateExportButton());
+        });
+    }
+
+    // =============== Events ===============
+    #FileUploadChange(element) { 
+        this.TitleNode.value = element.files[0].name.replace('.json', '');
+        io.readJSONFile(element).then((data) => this.#CreateGrid(data));
+     } 
+     #FileExport(element) {
+        io.createJSONFile(this.Grid.RowData, `${this.TitleNode.value}.json`);
+     }
+    #AddRow(grid) { grid.AddNewRow(); }
+
+    #PanelClass = 'gridControlPanel';
+    #PanelSummaryClass = 'panelTitle';
+
+    constructor(panelId) {
+        this.Id = panelId;
+        this.GridId = `${this.Id}grid`;
+        this.InputHolderId = `${this.Id}inputHolder`;
+        this.GridButtonHolder = `${this.Id}GridButtonHolder`;
+        this.CreateBtnId = `${this.Id}CreatButton`;
+        this.FileUploadId = `${this.Id}FileInput`;
+        this.ExportBtnId = `${this.Id}ExportButton`;
+        this.PanelNode = this.#CreatePanel();
+        this.TitleNode = this.#CreateTitle();
+        this.Grid = null;
+    }
+}
+
+class GridBuilder {
     // =============== UI Builder ===============
     /** Creates entire table 
      * @param {string[]} columnNames Names for the headers
@@ -60,16 +198,16 @@ class GridBuilder {
             this.#CreateTableHead(columnNames).then((header) => {
                 table.appendChild(header);
                 this.#CreateTableBody(rowData).then((body) => table.appendChild(body))
-                .then(() => document.getElementById(this.PlaceHolderId).appendChild(table))
-                .then(() => res());
+                // .then(() => document.getElementById(this.PlaceHolderId).appendChild(table))
+                .then(() => res(table));
             });
         });
     }
     /** Create a new th for the header, and gives every row in the body a new td
      * @param {HTMLElement[]} rows rows to have a new column appended 
      */
-    CreateNewColumn(rows) {
-        this.Header.appendChild(this.#GetNewthElement());
+    CreateNewColumn(rows, header) {
+        header.appendChild(this.#GetNewthElement());
         for(const row of rows) row.appendChild(this.#GetNewtdElement());
     }
     /** Iterate through table columns or value properties to create a row
@@ -79,22 +217,60 @@ class GridBuilder {
      */
     CreateNewRow(columns, hasValue = false, isHeading = false) {
         let newRow = this.#GetNewtrElement();
-        for(const col in columns) {
-            // const newCol =  isHeading ? this.#GetNewthElement() : this.#GetNewtdElement();
-            let newCol = null;
-            if(isHeading) newCol = this.#GetNewthElement();
-            else {
-                newCol = this.#GetNewtdElement();
-                newCol.addEventListener('click', this.#CellOnClick);
-            }
-            if(hasValue) newCol.textContent = columns[col];
-            newRow.appendChild(newCol);
-        } 
+        if(columns instanceof NodeList) this.#NodeListRowHandler(columns, isHeading, hasValue, newRow);
+        else this.#OtherRowHandler(columns, isHeading, hasValue, newRow);
         return newRow;
     }
 
-    AddOnClickEventsToAllBodyCells(cells) {
+    DeleteRow(table) {
+        //Check if input is present on any row
+        //  If so delete that row
+        //  If not delete the buttom row
+        let input = document.getElementById(this.CellInputId);
+        if(input != null) {
+            console.log('closest:', input.closest('tr'));
+            let index = input.closest('tr').rowIndex;
+            
+            if(index != 0) {
+                table.deleteRow(index);
+            } else alert('Cannot delete header.');
+            return;
+        } 
+        alert('Please select row to delete');
+    }
+
+    DeleteColumn(table) {
+        let input = document.getElementById(this.CellInputId);
+        if(input != null) {
+            console.log('closest:', input.closest('tr'));
+            let index = input.closest('td').cellIndex;
+
+            for(let i = 0; i < table.rows.length; i++) 
+                table.rows[i].deleteCell(index);
+            
+            return;
+        } 
+        alert('Please select column to delete');
+    }
+
+    #CreateRow(col, isHeading, hasValue, newRow) {
+        const newCol =  isHeading ? this.#GetNewthElement() : this.#GetNewtdElement();
+        if(hasValue) newCol.textContent = col;
         
+        newRow.appendChild(newCol);
+    }
+
+    #NodeListRowHandler(nodelist, isHeading, hasValue, newRow) {
+        nodelist.forEach((col) => this.#CreateRow(col, isHeading, hasValue, newRow));
+    }
+
+    #OtherRowHandler(columns, isHeading, hasValue, newRow) {
+        for(const col in columns) {
+            this.#CreateRow(columns[col], isHeading, hasValue, newRow);
+        }
+    }
+
+    AddOnClickEventsToAllBodyCells(cells) {
         for(const cell of cells) {
             cell.addEventListener('click', this.#CellOnClick)
             //Create an input, input will be based on some attribute added to cell later
@@ -141,6 +317,7 @@ class GridBuilder {
         input.value = cell.textContent;
         cell.textContent = '';
         cell.appendChild(input);
+        input.focus();
     }
 
     // =============== Element Generators ===============
@@ -157,9 +334,17 @@ class GridBuilder {
     /** Creates a tr element for the grid */
     #GetNewtrElement() { return document.createElement('tr'); }
     /** Creates a th element for the grid */
-    #GetNewthElement() { return document.createElement('th'); }
+    #GetNewthElement() { 
+        const element = document.createElement('th');
+        element.addEventListener('click', (e) => this.#CellOnClick(e));
+        return element;
+    }
     /** Creates a td element for the grid */
-    #GetNewtdElement() { return document.createElement('td'); }
+    #GetNewtdElement() { 
+        const element = document.createElement('td');
+        element.addEventListener('click', (e) => this.#CellOnClick(e));
+        return element;
+     }
 
     // =============== Constructor ===============
     /** 
@@ -168,6 +353,7 @@ class GridBuilder {
     constructor(placeHolderId, tableId) {
         this.PlaceHolderId = placeHolderId;
         this.TableId = tableId;
+        this.CellInputId = `${this.TableId}_input`
     }
 }
 
@@ -242,7 +428,7 @@ class GridImportExport {
     }
 }
 
-export { Grid };
+export { Grid, GridControls };
 
 
 // =============== Rough Draft/Ideas ===============

@@ -12,6 +12,18 @@ body {
     margin: 0px;
 }
 
+h1 {
+    text-align: center;
+}
+
+section {
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: baseline; 
+    justify-content: center;
+}
+
 /* Navigation Styles */
 nav {
     margin: 0px;
@@ -49,6 +61,29 @@ nav a.active {
 }
 
 /* Table Styling */
+.gridControlPanel {
+    background-color: grey;
+    min-width: 45rem;
+    max-width: 75rem;
+    margin: 1rem;
+    padding: .5rem;
+    border-radius: 1rem;
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.panelTitle {
+    width: 100%;
+}
+
+summary {
+    text-align: center;
+}
+
 td {
     border: .1rem solid var(--nav-link-boder-color); 
+    height: 1rem;
+    min-width: 3rem;
 }
+

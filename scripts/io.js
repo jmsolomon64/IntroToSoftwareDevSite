@@ -11,6 +11,7 @@ function readJSONFile(input) {
     return new Promise((res, rej) => {
         const reader = new FileReader();
         reader.onload = function() {
+            console.log(input.files);
             res(reader.result);
         }
         reader.readAsText(input.files[0]);
