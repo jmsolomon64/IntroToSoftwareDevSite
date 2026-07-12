@@ -1,11 +1,10 @@
 
 function createJSONFile(json, fileName) {
     const blob = new Blob([JSON.stringify(json)], {type: 'text/json'});
-    const link = document.createElement('a');
-    link.download = fileName;
-    link.href = window.URL.createObjectURL(blob);
-    link.click();
+    downloadBlobAsFile(blob, fileName);
 }
+
+function createCanvasImage(blob, fileName) { downloadBlobAsFile(blob, fileName); }
 
 function readJSONFile(input) {
     return new Promise((res, rej) => {
@@ -18,4 +17,13 @@ function readJSONFile(input) {
     });
 }
 
-export { createJSONFile, readJSONFile };
+function downloadBlobAsFile(blob, fileName) {
+    const link = document.createElement('a');
+    const url = window.URL.createObjectURL(blob);
+    link.download = `${fileName}.png`;
+    link.href = url;
+    link.click();
+    window.URL.revokeObjectURL(url);
+}
+
+export { createJSONFile, readJSONFile, createCanvasImage };

@@ -111,6 +111,7 @@ class GridControls {
         const btn = document.createElement('button');
         btn.id = this.CreateBtnId;
         btn.textContent = 'Create New';
+        btn.addEventListener('click', (e) => this.#CreateNewClick(e.target));
         return btn;
     }
 
@@ -163,10 +164,15 @@ class GridControls {
     #FileUploadChange(element) { 
         this.TitleNode.value = element.files[0].name.replace('.json', '');
         io.readJSONFile(element).then((data) => this.#CreateGrid(data));
-     } 
-     #FileExport(element) {
+    } 
+
+    #CreateNewClick(element) {
+        this.#CreateGrid({'New Table Header': 'New Table Value'});
+    }
+
+    #FileExport(element) {
         io.createJSONFile(this.Grid.RowData, `${this.TitleNode.value}.json`);
-     }
+    }
     #AddRow(grid) { grid.AddNewRow(); }
 
     #PanelClass = 'gridControlPanel';
@@ -307,6 +313,7 @@ class GridBuilder {
             input = document.createElement('input');
             input.id = this.CellInputId;
             input.type = 'text';
+            input.addEventListener('focusout', (e) => this.#InputUnfocus(e));
         } else if(cell.contains(input)) {
             return; // if cell already has input no need to do anything
         } else {
@@ -318,6 +325,13 @@ class GridBuilder {
         cell.textContent = '';
         cell.appendChild(input);
         input.focus();
+    }
+
+    #InputUnfocus(args) {
+        const input = args.target;
+        const cell = input.parentElement;
+        cell.textContent = input.value;
+        input.remove();
     }
 
     // =============== Element Generators ===============

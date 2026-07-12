@@ -1,14 +1,24 @@
 :root {
+    /* Global Styles*/
     --background-color: white;
+    --font-color: black;
+    /* Navigation Styles */
     --nav-background-color: grey;
     --nav-link-color: black;
     --nav-link-boder-color: black;
     --nav-link-hover-background-color: white;
     --nav-link-hover-text-color: red;
+    /* File Editor Styles */
+    --grid-panel-color: grey;
+    --grid-header-color: whitesmoke;
+    --grid-body-color: whitesmoke;
+    --grid-font-color: black;
+    --grid-border-color: black;
 }
 
 body {
     background-color: var(--background-color);
+    color: var(--font-color);
     margin: 0px;
 }
 
@@ -62,7 +72,7 @@ nav a.active {
 
 /* Table Styling */
 .gridControlPanel {
-    background-color: grey;
+    background-color: var(--grid-panel-color);
     min-width: 45rem;
     max-width: 75rem;
     margin: 1rem;
@@ -82,8 +92,47 @@ summary {
 }
 
 td {
-    border: .1rem solid var(--nav-link-boder-color); 
+    border: .1rem solid var(--grid-border-color); 
     height: 1rem;
     min-width: 3rem;
+    background-color: var(--grid-body-color);
 }
 
+th {
+    border: .25rem solid var(--grid-border-color); 
+    height: 1rem;
+    min-width: 3rem;
+    background-color: var(--grid-header-color);
+}
+
+.fileEditorTop {
+    text-align: center;
+    padding: 2rem;
+}
+
+#gridHolder {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+}
+
+
+
+/* Settings Styles */
+#styleSettings {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+fieldset {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+}
+
+section > label {
+    padding: .5rem;
+}

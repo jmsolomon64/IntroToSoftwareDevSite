@@ -8,15 +8,23 @@
 </head>
 <body>
     <!-- Content -->
-    <h1>TODO: put something interesting on this page</h1>
+    <h1>Settings</h1>
+    <div id="styleSettings"></div>
+
     <script type="module">
-        import { loadStyles } from "./scripts/style.js";
+        import { StyleSettings, loadStyles } from "./scripts/style.js";
         import * as site from "./scripts/site.js";
-
-        console.log('Testing testing');
-
+        
         loadStyles();
-        site.renderHeader(site.settingsId);
+        document.addEventListener('DOMContentLoaded', function() {
+            site.renderHeader(site.settingsId);
+
+            const holderId = 'styleSettings';
+            const settingsId = 'styleFields';
+            const holder = document.getElementById(holderId);
+            const settings = new StyleSettings(settingsId);
+            holder.append(settings.CreateStyleSettings());
+        });
     </script>
 </body>
 </html>

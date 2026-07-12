@@ -8,15 +8,23 @@
 </head>
 <body>
     <!-- Content -->
-    <h1>TODO: put something interesting on this page</h1>
+    <h1>Texture Creator</h1>
+    <div id="textureContent"></div>
+
     <script type="module">
         import { loadStyles } from "./scripts/style.js";
+        import { CanvasControls } from './scripts/draw.js';
         import * as site from "./scripts/site.js";
 
-        console.log('Testing testing');
-
         loadStyles();
-        site.renderHeader(site.textureId);
+        document.addEventListener('DOMContentLoaded', function() {
+            site.renderHeader(site.textureId);
+            const contentId = 'textureContent';
+            const holder = document.getElementById(contentId);
+            const editor = new CanvasControls('textureEditor');
+            holder.appendChild(editor.CreateEditor());
+
+        });
     </script>
 </body>
 </html>

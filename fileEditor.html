@@ -9,56 +9,30 @@
 <body>
     <!-- Content -->
     <h1 class="title">File Editor</h1>
-    <section id="gridHolder">
-        <details class="fileEditorPanel">
-            <summary>Test</summary>
-            <div>example</div>
-        </details>
-        <details class="fileEditorPanel">
-            <summary>Test</summary>
-            <div>example</div>
-        </details>
-        <details class="fileEditorPanel">
-            <summary class="panelTitle"><input type="text" placeholder="Name of File"></summary>
-            <div>
-                <button>Create New</button>
-                <input type="file"/>
-            </div>
-        </details>
-    </section>
-    <!-- <button id="testButton">JSON Test</button>
-    <input id="testInput" type="file" accept=".json"></input>
-    <div id="placeholder"></div> -->
-    <!-- <table id="test">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Level</th>
-                <th>Health</th>
-                <th>Magic</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Juno</td>
-                <td>7</td>
-                <td>88</td>
-                <td>100</td>
-            </tr>
-            <tr>
-                <td>Poseidon</td>
-                <td>8</td>
-                <td>90</td>
-                <td>75</td>
-            </tr>
-            <tr>
-                <td>Aslan</td>
-                <td>5</td>
-                <td>100</td>
-                <td>45</td>
-            </tr>
-        </tbody>
-    </table> -->
-    <script type="module" src="./scripts/fileEditor.js"></script>
+    <div class="fileEditorTop">
+        <p><strong>Instructions:</strong> To get started, press the 'Generate Editor Panel' button. When a new panel appears, click the arrow on it to expand the panel. From there you can either select an existing JSON file to edit or create a brand new table from scratch. The input at the top of the file is used for naming the exported file.<p>
+        <button id="generatePanel">Generate Editor Panel</button>
+    </div>
+    <div id="gridHolder"></div>
+    <script type="module">
+        import { loadStyles } from "../scripts/style.js";
+        import * as io from '../scripts/io.js';
+        import * as site from "../scripts/site.js";
+        import { Grid, GridControls } from '../scripts/grid.js';
+
+        loadStyles();
+        document.addEventListener("DOMContentLoaded", function() {
+            site.renderHeader(site.fileEditorId);
+            const gridItems = [];
+            const generateButton = document.getElementById("generatePanel");
+            const gridHolder = document.getElementById("gridHolder");
+
+            generateButton.addEventListener('click', () => {
+                const grid = new GridControls(`fileEditorGrid${gridItems.length}`);
+                gridHolder.append(grid.CreatePanel());
+                gridItems.push(grid);
+            });
+        });
+    </script>
 </body>
 </html>
