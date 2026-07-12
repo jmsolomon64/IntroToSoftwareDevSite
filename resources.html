@@ -8,15 +8,27 @@
 </head>
 <body>
     <!-- Content -->
-    <h1>TODO: put something interesting on this page</h1>
+    <h1>Resources</h1>
+    <section id="description">
+        <p>
+            
+        </p>
+    </section>
+    <div id="resourcesLists">
+        <section id="softwareList">
+
+        </section>
+        <section id="learningHelp">
+            
+        </section> 
+    </div>
     <script type="module">
         import { loadStyles } from "./scripts/style.js";
         import * as site from "./scripts/site.js";
-
-        console.log('Testing testing');
-
         loadStyles();
-        site.renderHeader(site.resourceId);
+        document.addEventListener('DOMContentLoaded', function() {
+            site.renderHeader(site.homeId);
+        });
     </script>
 </body>
 </html>

@@ -8,9 +8,19 @@
 </head>
 <body>
     <!-- Content -->
-    <h1>TODO: put something interesting on this page</h1>
-    <button id="testButton">JSON Test</button>
-    <script type="module" src="./scripts/index.js"></script>
-    <input id="testInput" type="file" accept=".json"></input>
+    <h1>Welcome to Game Maker Helper!</h1>
+    <section>
+        <p>
+            The resources on this site are intended to assist Indie game makers in their endeavours. In this site you will find tools for editing JSON files, creating basic textures, and links to resources that can make game making easier. To make sure users feel inspired, all of the colors on this site can be customized in the settings.
+        </p>
+    </section>
+    <script type="module">
+        import { loadStyles } from "../scripts/style.js";
+        import * as site from "../scripts/site.js";
+        loadStyles();
+        document.addEventListener('DOMContentLoaded', function() {
+            site.renderHeader(site.homeId);
+        });
+    </script>
 </body>
 </html>
