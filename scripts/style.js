@@ -108,6 +108,11 @@ const styleSet = {
         'Body Column Color': '--grid-body-color',
         'Font Color': '--grid-font-color',
         'Border Color': '--grid-border-color'
+    },
+    'Resources Styles': {
+        'Panel Color': '--resource-panel-color',
+        'Option Color': '--resource-listItem-color',
+        'Option Border Color': '--resource-listItemBorder-color'
     }
 };
 

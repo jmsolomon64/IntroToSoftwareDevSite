@@ -14,6 +14,10 @@
     --grid-body-color: whitesmoke;
     --grid-font-color: black;
     --grid-border-color: black;
+    /* Resource Styles */
+    --resource-panel-color: rgba(134, 229, 189, 0.763);
+    --resource-listItem-color: rgba(207, 215, 212, 0.9);  
+    --resource-listItemBorder-color: rgba(84, 144, 119, 0.763);
 }
 
 body {
@@ -27,7 +31,7 @@ h1 {
 }
 
 section {
-    margin: auto;
+    margin: 1rem;
     display: flex;
     flex-wrap: wrap;
     align-content: baseline; 
@@ -118,7 +122,45 @@ th {
     justify-content: center;
 }
 
+/* Resource Styling */
+.resourceSection > img {
+    max-width: 15rem;
+    min-width: 8rem;
+    height: auto;
+}
 
+#resourcesLists {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.resourceSection {
+    display: flex;
+    flex: 1 10 0px; 
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 1rem;
+    width: fit-content;
+    margin: 1rem;
+    background-color: var(--resource-panel-color);
+    text-align: left;
+    border-style: inset;
+    border-radius: 10%;
+}
+
+.resourceSection > ul {
+    list-style: none;
+}
+
+.resourceSection > ul > li {
+    padding: 1rem;
+    margin: .5rem;
+    border:solid;
+    border-radius: 1rem;
+    border-color: var(--resource-listItemBorder-color);
+    background-color: var(--resource-listItem-color);
+}
 
 /* Settings Styles */
 #styleSettings {

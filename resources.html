@@ -11,23 +11,63 @@
     <h1>Resources</h1>
     <section id="description">
         <p>
-            
+            <strong>FOSS</strong> or Free Open Source Software, is the best thing happen to the development world. Luckily for game developers, there is plenty of FOSS out there for game developers to utilize in their work. All software and helpful tutorials linked here are FOSS or FOSS related.
         </p>
     </section>
     <div id="resourcesLists">
-        <section id="softwareList">
-
-        </section>
-        <section id="learningHelp">
-            
-        </section> 
+        <div id="gameEngine" class="resourceSection">
+            <img src="https://godotengine.org/assets/favicon.svg" alt="Godot Logo"/>
+            <ul>
+                <li>
+                    <a href="https://godotengine.org/" target="_blank">Godot's Official Website</a>
+                </li>
+                <li>
+                    <a href="https://docs.godotengine.org" target="_blank">
+                        Official Godot Documentation
+                    </a>
+                </li>
+                <li>
+                    <a href="https://docs.godotengine.org/en/stable/tutorials/scripting/c_sharp/index.html">
+                        Official Godot C# Documentation
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div id="modeling" class="resourceSection">
+            <img src="https://www.blender.org/wp-content/themes/bthree/assets/icons/favicon.svg" alt="Blender Logo"/>
+            <ul>
+                <li>
+                    <a href="https://www.blender.org/" target="_blank">Blender's Official Website</a>
+                </li>
+                <li>
+                    <a href="https://docs.blender.org/" target="_blank">Blender's Official Documentation</a>
+                </li>
+                <li>
+                    <a href="https://docs.blender.org/" target="_blank">Blender's Official Add Ons</a>
+                </li>
+            </ul>
+        </div> 
+        <div id="drawing" class="resourceSection">
+            <img src="https://krita.org/images/favicon.ico" alt="Krita Logo"></img>
+            <ul>
+                <li>
+                    <a href="https://krita.org/" target="_blank">Krita's Official Website</a>
+                </li>
+                <li>
+                    <a href="https://docs.krita.org/" target="_blank">Krita's Official Documentation</a>
+                </li>
+                <li>
+                    <a href="https://krita-artists.org/" target="_blank">Community for Krita Users</a>
+                </li>
+            </ul>
+        </div>
     </div>
     <script type="module">
         import { loadStyles } from "./scripts/style.js";
         import * as site from "./scripts/site.js";
         loadStyles();
         document.addEventListener('DOMContentLoaded', function() {
-            site.renderHeader(site.homeId);
+            site.renderHeader(site.resourceId);
         });
     </script>
 </body>
